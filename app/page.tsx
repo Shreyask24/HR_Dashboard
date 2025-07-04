@@ -34,11 +34,15 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">HR Dashboard</h1>
+    <div className="min-h-screen bg-[#F7F1E1] transition-colors duration-300 px-6 py-10">
+      <div className="flex items-center justify-between mb-10">
+        <h1 className="text-4xl font-extrabold text-[#3E2C1C]">
+          HR Dashboard
+        </h1>
+      </div>
 
       {loading ? (
-        <p className="text-gray-500">Loading employees...</p>
+        <p className="text-[#5C4A3C] text-lg">Loading employees...</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {users.map((user) => (
