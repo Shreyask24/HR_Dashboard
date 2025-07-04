@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { getRandomDepartment, getRandomRating } from '../lib/helpers';
+import { User } from '../types';
 import EmployeeCard from '../components/EmployeeCard';
-import { getRandomDepartment, getRandomRating } from '@/lib/helpers';
-import { User } from '@/types';
+import { useSearch } from '../hooks/useSearch';
+import SearchFilterBar from '@/components/SearchFilter';
 
 export default function HomePage() {
   const [users, setUsers] = useState<User[]>([]);
@@ -15,7 +17,7 @@ export default function HomePage() {
       const res = await fetch('https://dummyjson.com/users?limit=20');
       const data = await res.json();
 
-      const updatedUsers: User[] = data.users.map((user: any) => ({
+      const enrichedUsers: User[] = data.users.map((user: any) => ({
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -26,28 +28,47 @@ export default function HomePage() {
         rating: getRandomRating(),
       }));
 
-      setUsers(updatedUsers);
+      setUsers(enrichedUsers);
       setLoading(false);
     };
 
     fetchUsers();
   }, []);
 
+  const {
+    searchText,
+    setSearchText,
+    activeDepartments,
+    toggleDepartment,
+    activeRatings,
+    toggleRating,
+    filteredUsers,
+  } = useSearch(users);
+
   return (
-    <div className="min-h-screen bg-[#F7F1E1] transition-colors duration-300 px-6 py-10">
-      <div className="flex items-center justify-between mb-10">
-        <h1 className="text-4xl font-extrabold text-[#3E2C1C]">
-          HR Dashboard
-        </h1>
-      </div>
+    <div className="p-6 bg-[#F7F1E1] min-h-screen text-[#4B3832] dark:bg-black dark:text-white">
+      <h1 className="text-3xl font-bold mb-6 text-[#A67B5B]">HR Dashboard</h1>
+
+      <SearchFilterBar
+        searchText={searchText}
+        setSearchText={setSearchText}
+        activeDepartments={activeDepartments}
+        toggleDepartment={toggleDepartment}
+        activeRatings={activeRatings}
+        toggleRating={toggleRating}
+      />
 
       {loading ? (
-        <p className="text-[#5C4A3C] text-lg">Loading employees...</p>
+        <p className="text-[#F7F1E1] flex justify-center items-center">Loading employees...</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {users.map((user) => (
-            <EmployeeCard key={user.id} user={user} />
-          ))}
+          {filteredUsers.length > 0 ? (
+            filteredUsers.map((user) => (
+              <EmployeeCard key={user.id} user={user} />
+            ))
+          ) : (
+            <p className="text-[#A67B5B] text-sm">No users match your filters.</p>
+          )}
         </div>
       )}
     </div>

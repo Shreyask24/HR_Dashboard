@@ -38,17 +38,17 @@ export default function EmployeeCard({ user }: { user: User }) {
             <div className="flex justify-between mt-4 text-sm font-medium space-x-2">
                 <button
                     onClick={() => router.push(`/employee/${user.id}`)}
-                    className="px-3 py-1 rounded-full bg-[#A67B5B]/10 text-[#A67B5B] hover:bg-[#A67B5B]/20 transition"
+                    className="px-3 py-1 rounded-full cursor-pointer bg-[#A67B5B]/10 text-[#A67B5B] hover:bg-[#A67B5B]/20 transition"
                 >
                     View
                 </button>
                 <button
-                    className="px-3 py-1 rounded-full bg-[#3E2C1C]/10 text-[#3E2C1C] hover:bg-[#3E2C1C]/20 transition"
+                    className="px-3 py-1 rounded-full cursor-pointer bg-[#3E2C1C]/10 text-[#3E2C1C] hover:bg-[#3E2C1C]/20 transition"
                 >
                     Bookmark
                 </button>
                 <button
-                    className="px-3 py-1 rounded-full bg-[#D97706]/10 text-[#D97706] hover:bg-[#D97706]/20 transition"
+                    className="px-3 py-1 rounded-full cursor-pointer bg-[#D97706]/10 text-[#D97706] hover:bg-[#D97706]/20 transition"
                 >
                     Promote
                 </button>
