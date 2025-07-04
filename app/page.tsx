@@ -46,9 +46,7 @@ export default function HomePage() {
   } = useSearch(users);
 
   return (
-    <div className="p-6 bg-[#F7F1E1] min-h-screen text-[#4B3832] dark:bg-black dark:text-white">
-      <h1 className="text-3xl font-bold mb-6 text-[#A67B5B]">HR Dashboard</h1>
-
+    <div className="p-6 bg-[#F7F1E1] min-h-screen text-[#4B3832]">
       <SearchFilterBar
         searchText={searchText}
         setSearchText={setSearchText}

@@ -7,4 +7,6 @@ export interface User {
     image: string;
     department: string;
     rating: number;
+    address: { city: string, address: string };
+    phone: number
 }
