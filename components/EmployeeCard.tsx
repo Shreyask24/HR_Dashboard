@@ -1,60 +1,88 @@
-'use client';
+import { User } from '../types';
+import { useBookmarks } from '../hooks/useBookmarks';
+import { Bookmark, BookmarkCheck } from 'lucide-react';
 
-import { User } from '@/types';
-import { useRouter } from 'next/navigation';
+interface Props {
+    user: User;
+    context?: 'dashboard' | 'bookmarks';
+}
 
-export default function EmployeeCard({ user }: { user: User }) {
-    const router = useRouter();
+export default function EmployeeCard({ user, context = 'dashboard' }: Props) {
+    const {
+        addBookmark,
+        removeBookmark,
+        isBookmarked,
+    } = useBookmarks();
+
+    const alreadyBookmarked = isBookmarked(user.id);
 
     return (
-        <div className="bg-[#F7F1E1] rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border border-[#DCC8A5]">
-            <div className="flex items-center gap-4">
-                <img
-                    src={user.image}
-                    alt={`${user.firstName} ${user.lastName}`}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-[#A67B5B]"
-                />
+        <div className="bg-white p-4 rounded-xl shadow text-[#4B3832]">
+            <div className="flex justify-between gap-4 mb-3">
+                <div className="flex items-center gap-4 mb-3">
+                    <img
+                        src={user.image}
+                        alt={user.firstName}
+                        className="w-16 h-16 rounded-full"
+                    />
+                    <div>
+                        <h2 className="text-lg font-semibold">
+                            {user.firstName} {user.lastName}
+                        </h2>
+                        <p className="text-md text-gray-500">{user.email}</p>
+                        <p className="text-md font-bold">{user.department}</p>
+                        <p className="text-sm">
+                            {'⭐'.repeat(user.rating)}
+                        </p>
+                    </div>
+                </div>
+
                 <div>
-                    <h2 className="text-lg font-semibold text-[#3E2C1C]">
-                        {user.firstName} {user.lastName}
-                    </h2>
-                    <p className="text-sm text-[#5C4A3C]">{user.email}</p>
+                    {context === 'dashboard' && !alreadyBookmarked ? (
+                        <button
+                            onClick={() => addBookmark(user)}
+                            className="text-sm px-3 py-1 cursor-pointer text-[#4B3832] rounded"
+                        >
+                            <Bookmark />
+                        </button>)
+                        :
+                        (
+                            <button
+                                onClick={() => removeBookmark(user.id)}
+                                className="text-sm px-3 py-1 cursor-pointer text-[#4B3832] rounded"
+                            >
+                                <BookmarkCheck />
+                            </button>
+                        )}
                 </div>
             </div>
 
-            <div className="mt-4 space-y-1 text-sm text-[#3E2C1C]">
-                <p>
-                    <span className="font-medium text-[#A67B5B]">Age:</span> {user.age}
-                </p>
-                <p>
-                    <span className="font-medium text-[#A67B5B]">Department:</span> {user.department}
-                </p>
-                <p>
-                    <span className="font-medium text-[#A67B5B]">Rating:</span>{' '}
-                    <span className="text-[#D97706] font-semibold">⭐ {user.rating}/5</span>
-                </p>
-            </div>
-
-            <div className="flex justify-between mt-4 text-sm font-medium space-x-2">
-                <button
-                    onClick={() => router.push(`/employee/${user.id}`)}
-                    className="px-3 py-1 rounded-full cursor-pointer bg-[#A67B5B]/10 text-[#A67B5B] hover:bg-[#A67B5B]/20 transition"
+            <div className="flex gap-2 flex-wrap">
+                <a
+                    href={`/employee/${user.id}`}
+                    className="text-sm px-3 py-1 bg-[#A67B5B] text-white rounded"
                 >
                     View
-                </button>
-                <button
-                    className="px-3 py-1 rounded-full cursor-pointer bg-[#3E2C1C]/10 text-[#3E2C1C] hover:bg-[#3E2C1C]/20 transition"
-                >
-                    Bookmark
-                </button>
-                <button
-                    className="px-3 py-1 rounded-full cursor-pointer bg-[#D97706]/10 text-[#D97706] hover:bg-[#D97706]/20 transition"
-                >
-                    Promote
-                </button>
+                </a>
+
+                {context === 'bookmarks' && (
+                    <>
+                        <button
+                            onClick={() => alert('Promoted')}
+                            className="text-sm px-3 py-1 bg-green-600 text-white rounded"
+                        >
+                            Promote
+                        </button>
+
+                        <button
+                            onClick={() => alert('Assigned')}
+                            className="text-sm px-3 py-1 bg-blue-600 text-white rounded"
+                        >
+                            Assign to Projects
+                        </button>
+                    </>
+                )}
             </div>
-
-
         </div>
     );
 }
