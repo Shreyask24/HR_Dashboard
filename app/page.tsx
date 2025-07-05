@@ -17,7 +17,7 @@ export default function HomePage() {
       const res = await fetch('https://dummyjson.com/users?limit=20');
       const data = await res.json();
 
-      const enrichedUsers: User[] = data.users.map((user: any) => ({
+      const udpdatedUsers: User[] = data.users.map((user: any) => ({
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -28,7 +28,7 @@ export default function HomePage() {
         rating: getRandomRating(),
       }));
 
-      setUsers(enrichedUsers);
+      setUsers(udpdatedUsers);
       setLoading(false);
     };
 

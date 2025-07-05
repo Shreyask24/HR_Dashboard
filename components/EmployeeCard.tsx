@@ -29,7 +29,7 @@ export default function EmployeeCard({ user, context = 'dashboard' }: Props) {
                         <h2 className="text-lg font-semibold">
                             {user.firstName} {user.lastName}
                         </h2>
-                        <p className="text-md text-gray-500">{user.email}</p>
+                        <p className="text-xs font-bold md:text-sm md:font-semibold text-gray-500">{user.email}</p>
                         <p className="text-md font-bold">{user.department}</p>
                         <p className="text-sm">
                             {'⭐'.repeat(user.rating)}
