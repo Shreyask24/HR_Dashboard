@@ -2,11 +2,13 @@ import { getMockBio, getPastPerformance } from '../../../lib/mockDetails';
 import UserProfileCard from '../../../components/UserProfileCard';
 import TabPanel from '../../../components/TabPanel';
 
-interface Params {
-    params: { id: string };
-}
+type PageProps = {
+    params: {
+        id: string;
+    };
+};
 
-export default async function EmployeeDetailPage({ params }: Params) {
+export default async function EmployeeDetailPage({ params }: PageProps) {
     const res = await fetch(`https://dummyjson.com/users/${params.id}`);
     const user = await res.json();
 
