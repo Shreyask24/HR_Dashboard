@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HR Performance Dashboard
+
+[Live Demo](https://your-live-url.vercel.app) • [GitHub Repository](https://github.com/Shreyask24/HR_Dashboard)
+
+A responsive HR management dashboard built using Next.js App Router, Tailwind CSS, and Context API.  
+This application enables HR teams to view employee performance, manage bookmarks, and explore department-level analytics with a clean, corporate UI.
+
+---
+
+## Features
+
+### Dashboard (`/`)
+- Displays user cards fetched from `https://dummyjson.com/users?limit=20`
+- Shows full name, email, age, department, and performance rating
+- Includes actions: View, Bookmark, Promote
+
+### Search and Filter
+- Search bar to filter employees by name, email, or department
+- Multi-select filters for departments & performance ratings
+
+### Employee Details Page (`/employee/[id]`)
+- Detailed view of an employee’s profile including:
+  - Address, phone, mock bio, and mock past performance
+- Tabbed layout: Overview, Projects, Feedback
+
+### Bookmark Manager (`/bookmarks`)
+- Displays bookmarked employees
+- Options to remove, promote, or assign to project (UI-only)
+
+### Analytics (`/analytics`)
+- Bar chart: Average performance ratings per department (calculated)
+- Line chart: Mocked monthly bookmark trend
+- Built using Chart.js with real-time data integration
+
+---
+
+## UI and Accessibility
+
+- Dark/Light mode toggle using Tailwind’s class-based theming
+- Mobile-first responsive layout for all screen sizes
+  
+---
+
+## Tech Stack
+
+- Framework: Next.js (App Router)
+- Styling: Tailwind CSS
+- State Management: React Context API
+- Charts: Chart.js (via react-chartjs-2)
+- Custom Hooks: `useSearch`, `useBookmarks`
+- Utility Libraries: `localStorage`, custom random data helpers
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Shreyask24/HR_Dashboard.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Run the development server
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
