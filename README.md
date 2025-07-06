@@ -74,9 +74,6 @@ npm run dev
 
 ## Screenshots
 ![image](https://github.com/user-attachments/assets/a97f918a-5e5a-4ee2-8fa0-539874d9ab37)
+![image](https://github.com/user-attachments/assets/7215e17f-6fa4-474e-ac74-ad0c407e2b18)
 ![image](https://github.com/user-attachments/assets/8b7ae102-cb47-47fa-82cc-7e9e524e3e64)
 ![image](https://github.com/user-attachments/assets/a9e3ce9e-3b78-4667-960c-6741fd68d011)
-
-
-
-
