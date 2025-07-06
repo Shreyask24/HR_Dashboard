@@ -1,6 +1,6 @@
 # HR Performance Dashboard
 
-[Live Demo](https://your-live-url.vercel.app) • [GitHub Repository](https://github.com/Shreyask24/HR_Dashboard)
+[Live Demo](https://hr-dashboard-liard.vercel.app/) • [GitHub Repository](https://github.com/Shreyask24/HR_Dashboard)
 
 A responsive HR management dashboard built using Next.js App Router, Tailwind CSS, and Context API.  
 This application enables HR teams to view employee performance, manage bookmarks, and explore department-level analytics with a clean, corporate UI.
