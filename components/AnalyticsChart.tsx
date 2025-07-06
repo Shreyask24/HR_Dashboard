@@ -15,6 +15,7 @@ import {
 } from 'chart.js';
 
 import { User } from '../types';
+import { useTheme } from 'next-themes';
 
 ChartJS.register(
     CategoryScale,
@@ -33,6 +34,7 @@ interface Props {
 
 export default function AnalyticsCharts({ users }: Props) {
     const [avgRatingData, setAvgRatingData] = useState<any>(null);
+    const { theme } = useTheme();
 
     useEffect(() => {
         const departmentRatings: { [dept: string]: number[] } = {};
@@ -44,9 +46,7 @@ export default function AnalyticsCharts({ users }: Props) {
             departmentRatings[user.department].push(user.rating);
         });
 
-        console.log(departmentRatings)
         const departments = Object.keys(departmentRatings);
-        console.log("Dept", departments)
 
         const avgRatings = departments.map((dept) => {
             const ratings = departmentRatings[dept];
@@ -56,15 +56,73 @@ export default function AnalyticsCharts({ users }: Props) {
 
         setAvgRatingData({
             labels: departments,
+            responsive: true,
+            maintainAspectRatio: false,
             datasets: [
                 {
                     label: 'Avg Rating',
                     data: avgRatings,
-                    backgroundColor: '#A67B5B'
-                }
-            ]
+                    backgroundColor: '#A67B5B',
+                },
+            ],
+            options: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: theme === 'dark' ? 'white' : 'black',
+                        },
+                    },
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: theme === 'dark' ? 'white' : 'black',
+                        },
+                        grid: {
+                            color: theme === 'dark' ? 'white' : 'gray',
+                        },
+                    },
+                    y: {
+                        ticks: {
+                            color: theme === 'dark' ? 'white' : 'black',
+                        },
+                        grid: {
+                            color: theme === 'dark' ? 'white' : 'gray',
+                        },
+                    },
+                },
+            },
         });
-    }, [users]);
+    }, [users, theme]);
+
+
+    const lineChartOptions = {
+        plugins: {
+            legend: {
+                labels: {
+                    color: theme === 'dark' ? 'white' : 'black',
+                },
+            },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: theme === 'dark' ? 'white' : 'black',
+                },
+                grid: {
+                    color: theme === 'dark' ? 'white' : 'gray',
+                },
+            },
+            y: {
+                ticks: {
+                    color: theme === 'dark' ? 'white' : 'black',
+                },
+                grid: {
+                    color: theme === 'dark' ? 'white' : 'gray',
+                },
+            },
+        },
+    };
 
     const bookmarkTrendData = {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
@@ -73,7 +131,7 @@ export default function AnalyticsCharts({ users }: Props) {
                 label: 'Bookmarks Added',
                 data: [2, 4, 6, 3, 5],
                 borderColor: '#A67B5B',
-                backgroundColor: '#F7F1E1',
+                backgroundColor: '#A67B5B',
                 fill: true
             }
         ]
@@ -81,18 +139,22 @@ export default function AnalyticsCharts({ users }: Props) {
 
     return (
         <div className="space-y-8">
-            <div className="bg-white dark:bg-[#1f1f1f] p-6 rounded-xl shadow text-[#4B3832] dark:text-white">
+            <div className={`p-6 rounded-xl shadow
+    ${theme === 'light' ? 'bg-white text-[#4B3832]' : 'bg-[#1f1f1f] text-white'}
+  `}>
                 <h2 className="text-lg font-semibold mb-4">
                     Department-wise Average Rating
                 </h2>
-                {avgRatingData && <Bar data={avgRatingData} />}
+                {avgRatingData && <Bar data={avgRatingData} options={avgRatingData.options} />}
             </div>
 
-            <div className="bg-white dark:bg-[#1f1f1f] p-6 rounded-xl shadow text-[#4B3832] dark:text-white">
+            <div className={`p-6 rounded-xl shadow
+    ${theme === 'light' ? 'bg-white text-[#4B3832]' : 'bg-[#1f1f1f] text-white'}
+  `}>
                 <h2 className="text-lg font-semibold mb-4">
                     Bookmark Trend
                 </h2>
-                <Line data={bookmarkTrendData} />
+                <Line data={bookmarkTrendData} options={lineChartOptions} />
             </div>
         </div>
     );

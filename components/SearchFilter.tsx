@@ -1,5 +1,6 @@
 'use client';
 
+import { useTheme } from 'next-themes';
 import { departments } from '../lib/helpers';
 
 interface Props {
@@ -19,8 +20,9 @@ export default function SearchFilterBar({
     activeRatings,
     toggleRating,
 }: Props) {
+    const { theme } = useTheme()
     return (
-        <div className="bg-[#F7F1E1] p-4 rounded-xl mb-6 shadow">
+        <div className={`${theme === 'light' ? 'bg-[#F7F1E1] text-[#4B3832]' : 'bg-[#1f1f1f] text-white border-2 border-[#4B3832]'} p-4 rounded-xl mb-6 shadow`}>
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <input
                     type="text"

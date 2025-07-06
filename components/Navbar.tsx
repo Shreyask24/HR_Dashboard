@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useTheme } from '@/hooks/useTheme';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 const links = [
     { href: '/', label: 'Dashboard' },
@@ -14,11 +14,16 @@ const links = [
 
 export default function Navbar() {
     const pathname = usePathname();
-    const { theme, toggleTheme } = useTheme();
+    const { theme, setTheme } = useTheme();
     const [menuOpen, setMenuOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => setMounted(true), []);
+
+    if (!mounted) return null;
 
     return (
-        <nav className="bg-[#F7F1E1] dark:bg-[#1f1f1f] px-6 py-4 shadow-md">
+        <nav className={`${theme === 'light' ? 'bg-white text-[#4B3832]' : 'bg-[#1f1f1f] text-white border border-[#4B3832]'} px-6 py-4 shadow-md`}>
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 <Link href="/">
                     <h1 className="text-2xl font-bold text-[#A67B5B]">HR Dashboard</h1>
@@ -39,7 +44,7 @@ export default function Navbar() {
                     ))}
 
                     <button
-                        onClick={toggleTheme}
+                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                         className="ml-4 px-3 py-1 text-sm rounded-full cursor-pointer border border-[#A67B5B] text-[#A67B5B]"
                     >
                         {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
@@ -72,7 +77,7 @@ export default function Navbar() {
 
                     <button
                         onClick={() => {
-                            toggleTheme();
+                            setTheme(theme === 'dark' ? 'light' : 'dark')
                             setMenuOpen(false);
                         }}
                         className="mt-2 px-3 py-2 text-sm rounded-md border border-[#A67B5B] text-[#A67B5B] w-fit self-start"

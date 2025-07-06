@@ -6,10 +6,14 @@ import { User } from '../types';
 import EmployeeCard from '../components/EmployeeCard';
 import { useSearch } from '../hooks/useSearch';
 import SearchFilterBar from '@/components/SearchFilter';
+import { useTheme } from 'next-themes';
 
 export default function HomePage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  const { theme } = useTheme()
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -35,6 +39,7 @@ export default function HomePage() {
     fetchUsers();
   }, []);
 
+
   const {
     searchText,
     setSearchText,
@@ -45,8 +50,14 @@ export default function HomePage() {
     filteredUsers,
   } = useSearch(users);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
-    <div className="p-6 bg-[#F7F1E1] min-h-screen text-[#4B3832]">
+    <div className={`p-6 ${theme === 'light' ? 'bg-[#F7F1E1] text-[#4B3832]' : 'bg-[#1f1f1f] text-white'} min-h-screen text-[#4B3832]`}>
       <SearchFilterBar
         searchText={searchText}
         setSearchText={setSearchText}
